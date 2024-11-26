@@ -1,0 +1,20 @@
+{% form_theme form '@SyliusUi/Form/theme.html.twig' %}
+
+<div class="ui middle aligned center aligned grid">
+    <div class="column">
+        {{ sylius_template_event('sylius.admin.login.before_form', _context) }}
+        <div class="ui left aligned very padded segment">
+            {% if sylius_admin_login %}
+                {{ form_start(form, {'action': action|default('/'), 'attr': {'class': 'ui large loadable form', 'novalidate': 'novalidate'}}) }}
+                {{ sylius_template_event('sylius.admin.login.form.content', _context) }}
+                {{ sylius_template_event('sylius.admin.login.form', _context) }}
+                {{ form_end(form, {'render_rest': false}) }}
+                <div class="ui  divider"></div>
+            {% endif %}
+            <a href="{{ path('glevents_admin_saml_login') }}" class="ui fluid button" style="color:white; background: #10324b">
+                <i class="shield alternate icon"></i>
+                {{ 'saml_auth.ui.log_by_sso'|trans }}
+            </a>
+        </div>
+    </div>
+</div>

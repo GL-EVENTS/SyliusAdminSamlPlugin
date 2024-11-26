@@ -1,0 +1,3 @@
+framework:
+    trusted_headers: [ 'x-forwarded-for', 'x-forwarded-proto' ]
+    trusted_proxies: '127.0.0.1,::1'

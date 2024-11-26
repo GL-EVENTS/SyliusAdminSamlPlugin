@@ -1,0 +1,4 @@
+suites:
+    main:
+        namespace: GlEvents/SamlPlugin
+        psr4_prefix: GlEvents/SamlPlugin
