@@ -1,0 +1,14 @@
+glevents_admin_saml_login:
+    path: /admin/login/saml
+    defaults:
+        _controller: GlEvents\SyliusAdminSamlPlugin\Controller\SamlLoginAction
+
+glevents_admin_saml_acs:
+    path: /admin/login/saml/acs
+    defaults:
+        _controller: GlEvents\SyliusAdminSamlPlugin\Controller\SamlAcsAction
+
+glevents_admin_saml_metadata:
+    path: /admin/login/saml/metadata
+    defaults:
+        _controller: GlEvents\SyliusAdminSamlPlugin\Controller\SamlMetadataAction   

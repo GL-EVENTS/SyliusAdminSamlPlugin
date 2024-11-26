@@ -1,0 +1,28 @@
+imports:
+    - { resource: "packages/framework.yaml" }
+    - { resource: "packages/twig.yaml" }
+    
+services:
+    _defaults:
+        public: true
+        autowire: true
+        autoconfigure: true
+
+    GlEvents\SyliusAdminSamlPlugin\:
+        resource: '../src/'
+
+    GlEvents\SyliusAdminSamlPlugin\Controller\:
+        resource: '../src/Controller'
+        tags: [ 'controller.service_arguments' ]
+
+    gl_events.saml_plugin.provider.saml_config:
+        class: GlEvents\SyliusAdminSamlPlugin\Provider\SamlConfigProvider
+
+    gl_events.saml_plugin.security.saml_authenticator:
+        class: GlEvents\SyliusAdminSamlPlugin\Security\SamlAuthenticator
+
+    gl_events.saml_plugin.controller.saml_acs_action:
+        class: GlEvents\SyliusAdminSamlPlugin\Controller\SamlAcsAction
+
+    gl_events.saml_plugin.controller.saml_login_action:
+        class: GlEvents\SyliusAdminSamlPlugin\Controller\SamlLoginAction
