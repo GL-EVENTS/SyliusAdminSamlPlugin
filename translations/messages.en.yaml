@@ -1,0 +1,3 @@
+saml_auth:
+    ui:
+        log_by_sso: 'Log by SSO'

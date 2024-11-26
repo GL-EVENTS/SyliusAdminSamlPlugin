@@ -1,0 +1,19 @@
+security:
+    providers:
+        saml_provider:
+            id: App\Application\SamlAuth\Security\SamlUserProvider
+    firewalls:
+        saml:
+            pattern: ^/saml
+            stateless: true
+            custom_authenticator: App\Application\SamlAuth\Security\SamlAuthenticator
+            main:
+                lazy: true
+                provider: saml_provider
+    access_control:
+        - { path: "%sylius.security.admin_regex%/saml", role: ROLE_SUPER_ADMIN }
+        - { path: "%sylius.security.admin_regex%/login/saml", role: PUBLIC_ACCESS }
+        - { path: "%sylius.security.admin_regex%/login/saml/logout", role: PUBLIC_ACCESS }
+        - { path: "%sylius.security.admin_regex%/login/saml/acs", role: PUBLIC_ACCESS }
+        - { path: "%sylius.security.admin_regex%/login/saml/sls", role: PUBLIC_ACCESS }
+        - { path: "%sylius.security.admin_regex%/login/saml/metadata", role: PUBLIC_ACCESS }

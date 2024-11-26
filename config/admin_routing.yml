@@ -1,0 +1,19 @@
+app_admin_saml_configuration:
+    path: /saml/configuration
+    defaults:
+        _controller: App\Application\SamlAuth\Controller\SamlConfigurationAction
+
+app_admin_saml_login:
+    path: /login/saml
+    defaults:
+        _controller: App\Application\SamlAuth\Controller\SamlLoginAction
+
+sylius_admin_saml_acs:
+    path: /login/saml/acs
+    defaults:
+        _controller: App\Application\SamlAuth\Controller\SamlAcsAction
+
+sylius_admin_saml_metadata:
+    path: /login/saml/metadata
+    defaults:
+        _controller: App\Application\SamlAuth\Controller\SamlMetadataAction   

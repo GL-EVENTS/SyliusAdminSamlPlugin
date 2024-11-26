@@ -1,0 +1,25 @@
+parameters:
+    app.saml.sp_private_key: '%env(not:SAML_SP_PRIVATE_KEY)%'
+    app.saml.idp_entity_id: '%env(SAML_IDP_ENTITY_ID)%'
+    app.saml.idp_sso_url: '%env(SAML_IDP_SSO_URL)%'
+    app.saml.idp_slo_url: '%env(SAML_IDP_SLO_URL)%'
+    app.saml.idp_certificate: '%env(SAML_IDP_CERTIFICATE)%'
+    app.saml.identifier_key: '%env(SAML_IDENTIFIER_KEY)%'
+    
+services:
+    gl_events.saml_plugin.provider.saml_config:
+        class: GlEvents\SamlPlugin\Provider\SamlConfigProvider
+        arguments:
+            $spPrivateKey: '%env(not:SAML_SP_PRIVATE_KEY)%'
+            $idpEntityId: '%env(not:SAML_IDP_ENTITY_ID)%'
+            $idpSsoUrl: '%env(not:SAML_IDP_SSO_URL)%'
+            $idpSlourl: '%env(not:SAML_IDP_SLO_URL)%'
+            $idpCert: '%env(not:SAML_IDP_CERTIFICATE)%'
+    gl_events.saml_plugin.provider.saml_authenticator:
+        class: GlEvents\SamlPlugin\Security\SamlAuthenticator
+        arguments:
+            $samlIdentifierKey: '%env(not:SAML_IDENTIFIER_KEY)%'
+    gl_events.saml_plugin.controller.saml_acs_action:
+        class: GlEvents\SamlPlugin\Controller\SamlAcsAction
+        arguments:
+            $samlIdentifierKey: '%env(not:SAML_IDENTIFIER_KEY)%'
