@@ -3,7 +3,7 @@
 
 ## Features
 
-This plugin allow your admin users to subscribe and sign in with SAML providers (Google, Azure, Okta, etc.)
+This plugin allow your admin users to sign in with SAML providers (Google, Azure, Okta, etc.)
 
 ![Shop account address book](docs/login.png "Form admin login")
 
