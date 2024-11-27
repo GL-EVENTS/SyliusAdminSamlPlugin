@@ -69,7 +69,13 @@ class SamlAuthenticator extends AbstractAuthenticator
         $user = $this->userProvider->loadUserByEmail($email);
 
         if (null === $user) {
-            $this->logger->info('Trying to log' . $email . ' with SAML but user not found');
+            $this->logger->info('Trying to login with SAML but user not found', [
+                'login_error' => 'user_not_found',
+                'saml_failure' => [
+                    'email' => $email,
+                    'host' => $request->getHost(),
+                ],
+            ]);
 
             throw new AuthenticationException('User not found');
         }

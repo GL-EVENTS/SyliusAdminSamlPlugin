@@ -64,7 +64,13 @@ final class SamlAcsAction extends AbstractController
         $user = $this->samlUserProvider->loadUserByEmail($email);
 
         if (null === $user) {
-            $this->logger->info('Trying to log' . $email . ' with SAML but user not found');
+            $this->logger->info('Trying to login with SAML but user not found', [
+                'login_error' => 'user_not_found',
+                'saml_failure' => [
+                    'email' => $email,
+                    'host' => $request->getHost(),
+                ],
+            ]);
             $this->addFlash('error', 'You are not authorized to access this application');
 
             return $this->redirectToRoute('sylius_admin_login');
