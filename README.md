@@ -5,8 +5,9 @@
 
 This plugin allow your admin users to sign in with SAML providers (Google, Azure, Okta, etc.)
 
-![Shop account address book](docs/login.png "Form admin login")
-
+<p align="center">
+    <img src="docs/login.png" alt="Form admin login" />
+</p>
 
 ## Installation
 
