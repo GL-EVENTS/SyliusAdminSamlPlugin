@@ -32,13 +32,7 @@ This plugin allow your admin users to sign in with SAML providers (Google, Azure
     SYLIUS_ADMIN_LOGIN=
 ```
 
-5. Copy Sylius overridden templates to your templates directory (e.g templates/bundles/):
-
-```bash
-  cp -r vendor/gl-events/sylius-admin-saml-plugin/templates/bundles/* templates/bundles/
-```
-
-6. Add the plugin class to your `config/bundles.php` file:
+5. Add the plugin class to your `config/bundles.php` file:
     
 ```php
     return [
@@ -46,7 +40,7 @@ This plugin allow your admin users to sign in with SAML providers (Google, Azure
         GL\SyliusAdminSamlPlugin\GlEventsSyliusAdminSamlPlugin::class => ['all' => true],
     ];
 ```
-7. Add default config
+6. Add default config
 
 ```yaml
 # config/packages/gl_events_saml_admin_plugin.yaml
@@ -57,7 +51,7 @@ imports:
 
 ```
 
-8. Add in your `config/security.yaml` file:
+7. Add in your `config/security.yaml` file:
 
 ```yaml
         providers:
@@ -80,8 +74,7 @@ imports:
               - { path: "%sylius.security.admin_regex%/login/saml/metadata", role: PUBLIC_ACCESS }
 
 ```
-
-9. Add in your `config/routes.yaml` file:
+8. Add in your `config/routes.yaml` file:
 
 ```yaml
    glevents_sylius_admin_saml_plugin:
