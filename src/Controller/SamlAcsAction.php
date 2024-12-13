@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace GlEvents\SyliusAdminSamlPlugin\Controller;
 
-use GlEvents\SyliusAdminSamlPlugin\Provider\SamlUserProvider;
 use GlEvents\SyliusAdminSamlPlugin\Provider\SamlConfigProvider;
+use GlEvents\SyliusAdminSamlPlugin\Provider\SamlUserProvider;
 use GlEvents\SyliusAdminSamlPlugin\Security\SamlAuthenticator;
 use OneLogin\Saml2\Auth;
 use OneLogin\Saml2\Error;

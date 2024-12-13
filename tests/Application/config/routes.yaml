@@ -1,0 +1,2 @@
+glevents_sylius_admin_saml_plugin:
+    resource: "@GlEventsSyliusAdminSamlPlugin/Resources/config/routing.yml"
