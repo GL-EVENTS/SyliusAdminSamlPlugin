@@ -1,0 +1,18 @@
+sylius_ui:
+    events:
+        sylius.admin.login.form.content:
+            blocks:
+                divider:
+                    enabled: false
+                credentials:
+                    template: "@GlEventsSyliusAdminSamlPlugin/Security/Form/_credentials.html.twig"
+                    priority: 20
+                submit:
+                    template: "@GlEventsSyliusAdminSamlPlugin/Security/Form/_submit.html.twig"
+                    priority: 10
+                request_password_reset:
+                    template: "@GlEventsSyliusAdminSamlPlugin/Security/Form/_requestPasswordResetButton.html.twig"
+                    priority: 5
+                sso:
+                    template: "@GlEventsSyliusAdminSamlPlugin/Security/Form/_sso.html.twig"
+                    priority: 0

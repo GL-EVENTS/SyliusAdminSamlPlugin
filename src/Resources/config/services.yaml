@@ -1,7 +1,3 @@
-imports:
-    - { resource: "packages/framework.yaml" }
-    - { resource: "packages/twig.yaml" }
-    
 services:
     _defaults:
         public: true
@@ -9,10 +5,10 @@ services:
         autoconfigure: true
 
     GlEvents\SyliusAdminSamlPlugin\:
-        resource: '../src/'
+        resource: '../../../src/'
 
     GlEvents\SyliusAdminSamlPlugin\Controller\:
-        resource: '../src/Controller'
+        resource: '../../../src/Controller'
         tags: [ 'controller.service_arguments' ]
 
     gl_events.saml_plugin.provider.saml_config:

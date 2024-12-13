@@ -52,7 +52,7 @@ This plugin allow your admin users to sign in with SAML providers (Google, Azure
 # config/packages/gl_events_saml_admin_plugin.yaml
 
 imports:
-    - { resource: "@GlEventsSyliusAdminSamlPlugin/config/services.yaml" }
+    - { resource: "@GlEventsSyliusAdminSamlPlugin/Resources/config/config.yaml" }
 
 
 ```
@@ -85,7 +85,7 @@ imports:
 
 ```yaml
    glevents_sylius_admin_saml_plugin:
-        resource: "@GlEventsSyliusAdminSamlPlugin/config/routing.yml"
+        resource: "@GlEventsSyliusAdminSamlPlugin/Resources/config/routing.yml"
 ```
 You are now ready to go  ! 🚀
 
