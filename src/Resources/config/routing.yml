@@ -4,7 +4,7 @@ glevents_admin_saml_login:
         _controller: GlEvents\SyliusAdminSamlPlugin\Controller\SamlLoginAction
 
 glevents_admin_saml_acs:
-    path: /%sylius_admin.path_name%/saml/acs
+    path: /%sylius_admin.path_name%/login/saml/acs
     defaults:
         _controller: GlEvents\SyliusAdminSamlPlugin\Controller\SamlAcsAction
 

@@ -37,7 +37,7 @@ This plugin allow your admin users to sign in with SAML providers (Google, Azure
 ```php
     return [
         ...
-        GL\SyliusAdminSamlPlugin\GlEventsSyliusAdminSamlPlugin::class => ['all' => true],
+        GlEvents\SyliusAdminSamlPlugin\GlEventsSyliusAdminSamlPlugin::class => ['all' => true],
     ];
 ```
 6. Add default config
