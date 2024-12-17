@@ -56,12 +56,12 @@ imports:
 ```yaml
         providers:
             saml_provider:
-              id: App\Application\SamlAuth\Security\SamlUserProvider
+              id: gl_events.saml_plugin.provider.saml_config
         firewalls:
               saml:
                     pattern: ^/saml
                     stateless: true
-                    custom_authenticator: App\Application\SamlAuth\Security\SamlAuthenticator
+                    custom_authenticator: gl_events.saml_plugin.security.saml_authenticator
               main:
                     lazy: true
                     provider: saml_provider
