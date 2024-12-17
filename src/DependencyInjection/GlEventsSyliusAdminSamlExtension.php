@@ -38,7 +38,7 @@ final class GlEventsSyliusAdminSamlExtension extends AbstractResourceExtension i
 
     protected function getMigrationsDirectory(): string
     {
-        return '@GlEventsSyliusAdminSamlPlugin/migrations';
+        return '@GlEventsSyliusAdminSamlPlugin/Migrations';
     }
 
     protected function getNamespacesOfMigrationsExecutedBefore(): array
