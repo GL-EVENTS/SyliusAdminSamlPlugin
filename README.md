@@ -56,7 +56,7 @@ imports:
 ```yaml
         providers:
             saml_provider:
-              id: gl_events.saml_plugin.provider.saml_config
+              id: gl_events.saml_plugin.provider.saml_user
         firewalls:
               saml:
                     pattern: ^/saml
