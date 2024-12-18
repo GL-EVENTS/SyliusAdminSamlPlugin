@@ -11,6 +11,9 @@ services:
         resource: '../../../src/Controller'
         tags: [ 'controller.service_arguments' ]
 
+    gl_events.saml_plugin.provider.saml_user:
+        class: GlEvents\SyliusAdminSamlPlugin\Provider\SamlUserProvider
+
     gl_events.saml_plugin.provider.saml_config:
         class: GlEvents\SyliusAdminSamlPlugin\Provider\SamlConfigProvider
 

@@ -61,7 +61,7 @@ imports:
               saml:
                     pattern: ^/saml
                     stateless: true
-                    custom_authenticator: gl_events.saml_plugin.security.saml_authenticator
+                    custom_authenticator: gl_events.saml_plugin.security.saml_user
               main:
                     lazy: true
                     provider: saml_provider
