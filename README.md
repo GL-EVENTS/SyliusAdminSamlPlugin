@@ -14,6 +14,7 @@ This plugin allow your admin users to sign in with SAML providers (Google, Azure
 1. Add the bundle to your `composer.json` file:
  ```bash
     composer require gl-events/sylius-admin-saml-plugin
+    composer require onelogin/php-saml
   ```
 2. Write your Identity Provider informations in your `.env` file:
  ```bash

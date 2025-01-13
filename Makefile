@@ -34,3 +34,6 @@ ci: init phpstan psalm phpunit phpspec behat
 integration: init phpunit behat
 
 static: install phpspec phpstan psalm
+
+fix-cs:
+	vendor/bin/ecs check --fix
