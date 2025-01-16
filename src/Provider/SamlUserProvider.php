@@ -16,6 +16,7 @@ use Symfony\Component\Security\Core\User\UserProviderInterface;
  */
 class SamlUserProvider implements UserProviderInterface
 {
+    /** @phpstan-ignore-next-line * */
     public function __construct(
         private UserRepositoryInterface $adminUserRepository,
     ) {
