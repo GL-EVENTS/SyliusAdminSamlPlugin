@@ -48,11 +48,10 @@ class SamlUserProvider implements UserProviderInterface
             throw new UnsupportedUserException(sprintf('Instances of "%s" are not supported.', get_class($user)));
         }
         $getter = 'getEmail';
-        $value = '';
         if (method_exists($user, $getter)) {
             /** @phpstan-ignore-next-line  */
             $value = $user->$getter();
-            if ($value !== '') {
+            if (null !== $value && $value !== '') {
                 return $this->loadUserByIdentifier($value);
             }
         }
