@@ -1,3 +1,6 @@
+DC = docker compose
+BIN = tests/Application/bin/console
+
 phpunit:
 	vendor/bin/phpunit
 
@@ -37,3 +40,17 @@ static: install phpspec phpstan psalm
 
 fix-cs:
 	vendor/bin/ecs check --fix
+
+## Start the project
+start:
+	@$(DC) up -d --remove-orphans --no-recreate
+
+## Stop the project
+stop:
+	@$(DC) down
+
+php:
+	@$(DC) exec app sh
+
+db-fixtures:
+	$(DC) exec app $(BIN) sylius:fixtures:load default --no-interaction
