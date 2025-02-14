@@ -23,13 +23,16 @@ class SamlConfigProvider
         private readonly string $idpSlourl,
         #[Autowire(env: 'SAML_IDP_CERTIFICATE')]
         private readonly string $idpCert,
-    ) {
+        #[Autowire(param: 'sylius_admin.path_name')]
+        private readonly string $syliusAdminPathName,
+    )
+    {
     }
 
     /**
+     * @return array<string, mixed>
      * @throws Error
      *
-     * @return array<string, mixed>
      */
     public function getConfig(): array
     {
@@ -47,10 +50,10 @@ class SamlConfigProvider
             'sp' => [
                 'entityId' => $schemeAndHost,
                 'assertionConsumerService' => [
-                    'url' => $schemeAndHost . '/admin/login/saml/acs',
+                    'url' => $schemeAndHost . '/' . $this->syliusAdminPathName . '/login/saml/acs',
                 ],
                 'singleLogoutService' => [
-                    'url' => $schemeAndHost . '/admin/login/saml/logout',
+                    'url' => $schemeAndHost . '/' . $this->syliusAdminPathName . '/login/saml/logout',
                 ],
                 'privateKey' => $this->spPrivateKey,
             ],

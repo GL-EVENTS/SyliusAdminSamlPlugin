@@ -54,3 +54,8 @@ php:
 
 db-fixtures:
 	$(DC) exec app $(BIN) sylius:fixtures:load default --no-interaction
+
+db-database:
+	$(DC) exec app $(BIN) d:d:c
+	$(DC) exec app $(BIN) d:s:u -f
+	$(DC) exec app $(BIN) sylius:fixtures:load default --no-interaction
