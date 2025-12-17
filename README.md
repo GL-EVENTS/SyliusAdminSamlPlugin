@@ -81,7 +81,11 @@ imports:
    glevents_sylius_admin_saml_plugin:
         resource: "@GlEventsSyliusAdminSamlPlugin/Resources/config/routing.yml"
 ```
-You are now ready to go  ! 🚀
+
+9. Verify your trusted_headers & trusted_proxies, see: https://symfony.com/doc/current/deployment/proxies.html#but-what-if-the-ip-of-my-reverse-proxy-changes-constantly
+
+
+10. You are now ready to go  ! 🚀
 
 ## Credits
 

@@ -1,4 +1,3 @@
 imports:
-    - { resource: "packages/framework.yaml" }
     - { resource: "packages/twig.yaml" }
     - { resource: "packages/sylius_ui.yaml" }
