@@ -23,6 +23,7 @@ This plugin allow your admin users to sign in with SAML providers (Google, Azure
     SAML_IDP_SLO_URL=
     SAML_IDP_CERTIFICATE=
     SAML_IDENTIFIER_KEY=
+    SAML_PROXY_VARS=false
 ```
 3. Add your SP private key in your `.env` file (you can generate one at your project root with `openssl genpkey -algorithm RSA -out private.key`):
  ```bash
@@ -82,7 +83,15 @@ imports:
         resource: "@GlEventsSyliusAdminSamlPlugin/Resources/config/routing.yml"
 ```
 
-9. Verify your trusted_headers & trusted_proxies, see: https://symfony.com/doc/current/deployment/proxies.html#but-what-if-the-ip-of-my-reverse-proxy-changes-constantly
+9. If your application runs behind a reverse proxy (load balancer, Kubernetes ingress, etc.) that terminates SSL, set `SAML_PROXY_VARS=true` in your `.env` file:
+
+```bash
+SAML_PROXY_VARS=true
+```
+
+This tells the `onelogin/php-saml` library to read `X-Forwarded-Proto`, `X-Forwarded-Host` and `X-Forwarded-Port` headers when building the current URL for SAML response validation. Without this, the library detects `http://` instead of `https://` and rejects the SAML response with an error like _"The response was received at http://... instead of https://..."_.
+
+Also verify your Symfony `trusted_proxies` and `trusted_headers` settings so that `$request->getScheme()` also returns the correct scheme, see: https://symfony.com/doc/current/deployment/proxies.html#but-what-if-the-ip-of-my-reverse-proxy-changes-constantly
 
 
 10. You are now ready to go  ! 🚀

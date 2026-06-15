@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace GlEvents\SyliusAdminSamlPlugin\Provider;
 
 use OneLogin\Saml2\Error;
+use OneLogin\Saml2\Utils;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -23,6 +24,8 @@ class SamlConfigProvider
         private readonly string $idpSlourl,
         #[Autowire(env: 'SAML_IDP_CERTIFICATE')]
         private readonly string $idpCert,
+        #[Autowire(env: 'bool:SAML_PROXY_VARS')]
+        private readonly bool $proxyVars = false,
         #[Autowire(param: 'sylius_admin.path_name')]
         private readonly string $syliusAdminPathName,
     )
@@ -36,6 +39,8 @@ class SamlConfigProvider
      */
     public function getConfig(): array
     {
+        Utils::setProxyVars($this->proxyVars);
+
         [$scheme, $host] = $this->getSPEntityId();
 
         $schemeAndHost = sprintf('%s://%s', $scheme, $host);
