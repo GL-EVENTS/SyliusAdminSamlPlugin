@@ -1,0 +1,9 @@
+{#
+    Renders a default Sylius admin login field only when the traditional form login
+    is enabled (SYLIUS_ADMIN_LOGIN env). The wrapped Sylius template is provided per
+    hookable through the `wrapped` context key, so this single wrapper is reused for
+    every field instead of duplicating the condition in each one.
+#}
+{% if sylius_admin_login %}
+    {{ include(hookable_metadata.context.wrapped) }}
+{% endif %}

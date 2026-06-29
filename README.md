@@ -29,9 +29,10 @@ This plugin allow your admin users to sign in with SAML providers (Google, Azure
  ```bash
     SAML_SP_PRIVATE_KEY=
 ```
-4. Enable or not the traditionnal sylius admin form login in your `.env` file:
+4. Enable or not the traditionnal sylius admin form login, and the SSO button, in your `.env` file (both default to `1`):
  ```bash
-    SYLIUS_ADMIN_LOGIN=
+    SYLIUS_ADMIN_LOGIN=1
+    SSO_LOGIN=1
 ```
 
 5. Add the plugin class to your `config/bundles.php` file:
@@ -48,7 +49,7 @@ This plugin allow your admin users to sign in with SAML providers (Google, Azure
 # config/packages/gl_events_saml_admin_plugin.yaml
 
 imports:
-    - { resource: "@GlEventsSyliusAdminSamlPlugin/Resources/config/config.yaml" }
+    - { resource: "@GlEventsSyliusAdminSamlPlugin/config/config.yaml" }
 
 
 ```
@@ -80,7 +81,7 @@ imports:
 
 ```yaml
    glevents_sylius_admin_saml_plugin:
-        resource: "@GlEventsSyliusAdminSamlPlugin/Resources/config/routing.yml"
+        resource: "@GlEventsSyliusAdminSamlPlugin/config/routing.yaml"
 ```
 
 9. If your application runs behind a reverse proxy (load balancer, Kubernetes ingress, etc.) that terminates SSL, set `SAML_PROXY_VARS=true` in your `.env` file:

@@ -11,7 +11,7 @@
     "license": "MIT",
     "require": {
         "php": "^8.3",
-        "sylius/sylius": "~1.12"
+        "sylius/sylius": "~2.0"
     },
     "require-dev": {
         "behat/behat": "^3.6.1",
@@ -30,7 +30,7 @@
         "phpspec/phpspec": "^7.2",
         "phpstan/extension-installer": "^1.0",
         "phpstan/phpstan": "^1.8.1",
-        "phpstan/phpstan-doctrine": "1.3.40",
+        "phpstan/phpstan-doctrine": "^1.5",
         "phpstan/phpstan-strict-rules": "^1.3.0",
         "phpstan/phpstan-webmozart-assert": "^1.2.0",
         "phpunit/phpunit": "^9.5",
@@ -43,6 +43,10 @@
         "symfony/dotenv": "^5.4 || ^6.0",
         "symfony/flex": "^2.2.2",
         "symfony/intl": "^5.4 || ^6.0",
+        "symfony/ux-autocomplete": "^2.36",
+        "symfony/ux-icons": "^2.36.1",
+        "symfony/ux-live-component": "^2.36",
+        "symfony/ux-twig-component": "^2.36",
         "symfony/web-profiler-bundle": "^5.4 || ^6.0",
         "onelogin/php-saml": "^4.2"
     },
@@ -53,6 +57,7 @@
         "sort-packages": true,
         "allow-plugins": {
             "dealerdirect/phpcodesniffer-composer-installer": false,
+            "php-http/discovery": true,
             "phpstan/extension-installer": true,
             "symfony/flex": true
         }

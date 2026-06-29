@@ -37,20 +37,29 @@ class SamlAuthenticator extends AbstractAuthenticator
 
     public function supports(Request $request): ?bool
     {
-        return 'sylius_admin_saml_acs' === $request->attributes->get('_route');
+        return 'glevents_admin_saml_acs' === $request->attributes->get('_route');
     }
 
-    /**
-     * @throws ValidationError
-     * @throws Error
-     */
     public function authenticate(Request $request): Passport
     {
-        $auth = new Auth($this->samlConfigProvider->getConfig());
-        $auth->processResponse();
+        try {
+            $auth = new Auth($this->samlConfigProvider->getConfig());
+            $auth->processResponse();
+        } catch (Error | ValidationError $e) {
+            $this->logger->critical('Unable to process SAML response', [
+                'login_error' => 'saml_response_invalid',
+                'saml_failure' => [
+                    'host' => $request->getHost(),
+                    'exception' => $e->getMessage(),
+                ],
+            ]);
+
+            throw new AuthenticationException('SAML authentication failed.', previous: $e);
+        }
+
         if (!$auth->isAuthenticated()) {
-            $this->logger->critical('SAML authentication failed for Azure', [
-                'login_error' => 'auth_failed_azure',
+            $this->logger->critical('SAML authentication failed', [
+                'login_error' => 'auth_failed',
                 'saml_failure' => [
                     'host' => $request->getHost(),
                     'last_error_reason' => $auth->getLastErrorReason(),
@@ -63,6 +72,18 @@ class SamlAuthenticator extends AbstractAuthenticator
         }
 
         $attributes = $auth->getAttributes();
+
+        if (!isset($attributes[$this->samlIdentifierKey][0])) {
+            $this->logger->critical('SAML response is missing the identifier attribute', [
+                'login_error' => 'identifier_attribute_missing',
+                'saml_failure' => [
+                    'identifier_key' => $this->samlIdentifierKey,
+                    'host' => $request->getHost(),
+                ],
+            ]);
+
+            throw new AuthenticationException('SAML authentication failed.');
+        }
 
         $email = $attributes[$this->samlIdentifierKey][0];
 
@@ -85,9 +106,6 @@ class SamlAuthenticator extends AbstractAuthenticator
         }));
     }
 
-    /**
-     * @throws Error
-     */
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?RedirectResponse
     {
         $url = $this->router->generate('sylius_admin_dashboard');

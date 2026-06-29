@@ -1,0 +1,4 @@
+saml_auth:
+    ui:
+        log_by_sso: 'Se connecter en SSO'
+        sso_failed: 'SSO authentication is not available'

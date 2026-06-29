@@ -1,0 +1,8 @@
+parameters:
+    # Display the SSO button by default; set SSO_LOGIN=0 to hide it.
+    env(SSO_LOGIN): '1'
+
+twig:
+    globals:
+        sylius_admin_login: '%env(SYLIUS_ADMIN_LOGIN)%'
+        sso_login: '%env(SSO_LOGIN)%'

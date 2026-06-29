@@ -20,7 +20,7 @@ final class GlEventsSyliusAdminSamlExtension extends AbstractResourceExtension i
     {
         $loader = new YamlFileLoader(
             $container,
-            new FileLocator(__DIR__ . '/../Resources/config'),
+            new FileLocator(__DIR__ . '/../../config'),
         );
 
         $loader->load('services.yaml');
@@ -38,7 +38,7 @@ final class GlEventsSyliusAdminSamlExtension extends AbstractResourceExtension i
 
     protected function getMigrationsDirectory(): string
     {
-        return '@GlEventsSyliusAdminSamlPlugin/Migrations';
+        return '@GlEventsSyliusAdminSamlPlugin/migrations';
     }
 
     protected function getNamespacesOfMigrationsExecutedBefore(): array

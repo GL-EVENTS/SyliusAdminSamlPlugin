@@ -21,8 +21,8 @@ backend:
 	tests/Application/bin/console sylius:fixtures:load default --no-interaction
 
 frontend:
-	(cd tests/Application && yarn install --pure-lockfile)
-	(cd tests/Application && GULP_ENV=prod yarn build)
+	(cd tests/Application && yarn install)
+	(cd tests/Application && yarn build:prod)
 
 behat:
 	APP_ENV=test vendor/bin/behat --colors --strict --no-interaction -vvv -f progress
@@ -53,6 +53,7 @@ db-fixtures:
 	$(DC) exec app $(BIN) sylius:fixtures:load default --no-interaction
 
 db-database:
-	$(DC) exec app $(BIN) d:d:c
+	$(DC) exec app $(BIN) d:d:drop --force --if-exists -nq
+	$(DC) exec app $(BIN) d:d:create -nq
 	$(DC) exec app $(BIN) d:s:u -f
 	$(DC) exec app $(BIN) sylius:fixtures:load default --no-interaction
