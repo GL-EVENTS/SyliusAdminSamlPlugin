@@ -14,19 +14,19 @@ class SamlConfigProvider
 {
     public function __construct(
         private readonly RequestStack $requestStack,
-        #[Autowire(env: 'SAML_SP_PRIVATE_KEY')]
+        #[Autowire(param: 'gl_events_sylius_admin_saml.sp.private_key')]
         private readonly string $spPrivateKey,
-        #[Autowire(env: 'SAML_IDP_ENTITY_ID')]
+        #[Autowire(param: 'gl_events_sylius_admin_saml.idp.entity_id')]
         private readonly string $idpEntityId,
-        #[Autowire(env: 'SAML_IDP_SSO_URL')]
+        #[Autowire(param: 'gl_events_sylius_admin_saml.idp.sso_url')]
         private readonly string $idpSsoUrl,
-        #[Autowire(env: 'SAML_IDP_SLO_URL')]
+        #[Autowire(param: 'gl_events_sylius_admin_saml.idp.slo_url')]
         private readonly string $idpSlourl,
-        #[Autowire(env: 'SAML_IDP_CERTIFICATE')]
+        #[Autowire(param: 'gl_events_sylius_admin_saml.idp.certificate')]
         private readonly string $idpCert,
         #[Autowire(param: 'sylius_admin.path_name')]
         private readonly string $syliusAdminPathName,
-        #[Autowire(env: 'bool:SAML_PROXY_VARS')]
+        #[Autowire(param: 'gl_events_sylius_admin_saml.proxy_vars')]
         private readonly bool $proxyVars = false,
     ) {
     }

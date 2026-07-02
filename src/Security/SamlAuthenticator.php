@@ -30,14 +30,14 @@ class SamlAuthenticator extends AbstractAuthenticator
         private readonly SamlUserProvider $userProvider,
         private readonly RouterInterface $router,
         private readonly LoggerInterface $logger,
-        #[Autowire(env: 'SAML_IDENTIFIER_KEY')]
+        #[Autowire(param: 'gl_events_sylius_admin_saml.identifier_key')]
         private readonly string $samlIdentifierKey,
     ) {
     }
 
     public function supports(Request $request): ?bool
     {
-        return 'glevents_admin_saml_acs' === $request->attributes->get('_route');
+        return 'glevents_sylius_saml_plugin_admin_acs' === $request->attributes->get('_route');
     }
 
     public function authenticate(Request $request): Passport

@@ -1,34 +1,6 @@
 sylius_twig_hooks:
     hooks:
-        # Sylius 2 replaced the `sylius_ui` event system by Twig Hooks.
-        # The traditional username/password form fields are only rendered when
-        # `SYLIUS_ADMIN_LOGIN` is enabled, while the SSO button is always shown.
-        'sylius_admin.security.login.page.content.form':
-            username:
-                template: '@GlEventsSyliusAdminSamlPlugin/Security/login/page/content/form/_traditional.html.twig'
-                context:
-                    wrapped: '@SyliusAdmin/security/login/page/content/form/username.html.twig'
-                priority: 400
-            password:
-                template: '@GlEventsSyliusAdminSamlPlugin/Security/login/page/content/form/_traditional.html.twig'
-                context:
-                    wrapped: '@SyliusAdmin/security/login/page/content/form/password.html.twig'
-                priority: 300
-            remember_me:
-                template: '@GlEventsSyliusAdminSamlPlugin/Security/login/page/content/form/_traditional.html.twig'
-                context:
-                    wrapped: '@SyliusAdmin/security/login/page/content/form/remember_me.html.twig'
-                priority: 200
-            submit:
-                template: '@GlEventsSyliusAdminSamlPlugin/Security/login/page/content/form/_traditional.html.twig'
-                context:
-                    wrapped: '@SyliusAdmin/security/login/page/content/form/submit.html.twig'
-                priority: 100
-            forgot_password:
-                template: '@GlEventsSyliusAdminSamlPlugin/Security/login/page/content/form/_traditional.html.twig'
-                context:
-                    wrapped: '@SyliusAdmin/security/login/page/content/form/forgot_password.html.twig'
-                priority: 0
+        'sylius_admin.security.login.page.content':
             sso:
-                template: '@GlEventsSyliusAdminSamlPlugin/Security/login/page/content/form/_sso.html.twig'
+                template: '@GlEventsSyliusAdminSamlPlugin/Security/login/page/content/form/sso.html.twig'
                 priority: -100

@@ -11,6 +11,7 @@ use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Translation\TranslatableMessage;
 
 final class SamlLoginAction extends AbstractController
 {
@@ -29,7 +30,7 @@ final class SamlLoginAction extends AbstractController
             $ssoUrl = $auth->login(returnTo: null, stay: true);
         } catch (Error $e) {
             $this->logger->error('Unable to start SAML login', ['exception' => $e]);
-            $this->addFlash('error', 'SSO authentication is not available');
+            $this->addFlash('error', new TranslatableMessage('saml_auth.flash.sso_unavailable'));
 
             return $this->redirectToRoute('sylius_admin_login');
         }
