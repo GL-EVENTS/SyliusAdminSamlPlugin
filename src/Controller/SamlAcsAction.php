@@ -17,6 +17,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Http\Authentication\UserAuthenticatorInterface;
+use Symfony\Component\Translation\TranslatableMessage;
 
 final class SamlAcsAction extends AbstractController
 {
@@ -26,25 +27,34 @@ final class SamlAcsAction extends AbstractController
         private readonly SamlAuthenticator $authenticator,
         private readonly SamlUserProvider $samlUserProvider,
         private readonly LoggerInterface $logger,
-        #[Autowire(env: 'SAML_IDENTIFIER_KEY')]
+        #[Autowire(param: 'gl_events_sylius_admin_saml.identifier_key')]
         private readonly string $samlIdentifierKey,
     ) {
     }
 
-    /**
-     * @throws Error
-     * @throws ValidationError
-     */
-    public function __invoke(Request $request): null|Response
+    public function __invoke(Request $request): Response
     {
-        $this->logger->info('Processing SAML ACS for Azure');
+        $this->logger->info('Processing SAML ACS response');
 
-        $auth = new Auth($this->samlConfigProvider->getConfig());
-        $auth->processResponse();
+        try {
+            $auth = new Auth($this->samlConfigProvider->getConfig());
+            $auth->processResponse();
+        } catch (Error | ValidationError $e) {
+            $this->logger->critical('Unable to process SAML response', [
+                'login_error' => 'saml_response_invalid',
+                'saml_failure' => [
+                    'host' => $request->getHost(),
+                    'exception' => $e->getMessage(),
+                ],
+            ]);
+            $this->addFlash('error', new TranslatableMessage('saml_auth.flash.authentication_failed'));
+
+            return $this->redirectToRoute('sylius_admin_login');
+        }
 
         if (!$auth->isAuthenticated()) {
-            $this->logger->critical('SAML authentication failed for Azure', [
-                'login_error' => 'auth_failed_azure',
+            $this->logger->critical('SAML authentication failed', [
+                'login_error' => 'auth_failed',
                 'saml_failure' => [
                     'host' => $request->getHost(),
                     'last_error_reason' => $auth->getLastErrorReason(),
@@ -52,12 +62,25 @@ final class SamlAcsAction extends AbstractController
                     'errors' => implode(' ', $auth->getErrors()),
                 ],
             ]);
-            $this->addFlash('error', 'SAML authentication failed');
+            $this->addFlash('error', new TranslatableMessage('saml_auth.flash.authentication_failed'));
 
             return $this->redirectToRoute('sylius_admin_login');
         }
 
         $attributes = $auth->getAttributes();
+
+        if (!isset($attributes[$this->samlIdentifierKey][0])) {
+            $this->logger->critical('SAML response is missing the identifier attribute', [
+                'login_error' => 'identifier_attribute_missing',
+                'saml_failure' => [
+                    'identifier_key' => $this->samlIdentifierKey,
+                    'host' => $request->getHost(),
+                ],
+            ]);
+            $this->addFlash('error', new TranslatableMessage('saml_auth.flash.authentication_failed'));
+
+            return $this->redirectToRoute('sylius_admin_login');
+        }
 
         $email = $attributes[$this->samlIdentifierKey][0];
         /** @var UserInterface|null $user */
@@ -71,21 +94,24 @@ final class SamlAcsAction extends AbstractController
                     'host' => $request->getHost(),
                 ],
             ]);
-            $this->addFlash('error', 'You are not authorized to access this application');
+            $this->addFlash('error', new TranslatableMessage('saml_auth.flash.not_authorized'));
 
             return $this->redirectToRoute('sylius_admin_login');
         }
 
         try {
-            return $this->userAuthenticator->authenticateUser(
+            $response = $this->userAuthenticator->authenticateUser(
                 $user,
                 $this->authenticator,
                 $request,
             );
         } catch (\Exception $e) {
-            $this->logger->error('Error during SAML authentication with ' . $email . ' for Azure, error: ' . $e->getMessage());
+            $this->logger->error('Error during SAML authentication for ' . $email, ['exception' => $e]);
+            $this->addFlash('error', new TranslatableMessage('saml_auth.flash.authentication_failed'));
 
-            return new Response('Authentication exception occurred', Response::HTTP_UNAUTHORIZED);
+            return $this->redirectToRoute('sylius_admin_login');
         }
+
+        return $response ?? $this->redirectToRoute('sylius_admin_dashboard');
     }
 }

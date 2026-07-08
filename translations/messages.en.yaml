@@ -1,0 +1,7 @@
+saml_auth:
+    ui:
+        log_by_sso: 'Log by SSO'
+    flash:
+        authentication_failed: 'SAML authentication failed'
+        not_authorized: 'You are not authorized to access this application'
+        sso_unavailable: 'SSO authentication is not available'

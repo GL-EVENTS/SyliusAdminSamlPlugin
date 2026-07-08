@@ -13,6 +13,6 @@ final class GlEventsSyliusAdminSamlPlugin extends Bundle
 
     public function getPath(): string
     {
-        return \dirname(__DIR__) . '/src';
+        return \dirname(__DIR__);
     }
 }

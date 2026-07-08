@@ -1,0 +1,4 @@
+gl_events_sylius_admin_saml:
+    proxy_vars: false
+    admin_login: true
+    sso_login: true

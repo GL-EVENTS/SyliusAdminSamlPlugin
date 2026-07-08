@@ -1,0 +1,6 @@
+sylius_twig_hooks:
+    hooks:
+        'sylius_admin.security.login.page.content':
+            sso:
+                template: '@GlEventsSyliusAdminSamlPlugin/Security/login/page/content/form/sso.html.twig'
+                priority: -100

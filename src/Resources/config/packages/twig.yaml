@@ -1,3 +1,0 @@
-twig:
-    globals:
-        sylius_admin_login: '%env(SYLIUS_ADMIN_LOGIN)%'

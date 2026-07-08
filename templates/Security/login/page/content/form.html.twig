@@ -1,0 +1,10 @@
+{#
+    Renders the whole default Sylius admin login form only when it is enabled
+    (gl_events_sylius_admin_saml.admin_login). The wrapped Sylius template is provided
+    through the `wrapped` context key, so the host gates the entire form with a single
+    hook override instead of wrapping each field. The SSO button lives on the sibling
+    `sylius_admin.security.login.page.content` hook, so it stays visible in SSO-only mode.
+#}
+{% if default_admin_login_enabled %}
+    {{ include(hookable_metadata.context.wrapped) }}
+{% endif %}

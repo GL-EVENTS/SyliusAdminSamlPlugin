@@ -1,0 +1,7 @@
+sylius_twig_hooks:
+    hooks:
+        'sylius_admin.security.login.page.content':
+            form:
+                template: '@GlEventsSyliusAdminSamlPlugin/Security/login/page/content/form.html.twig'
+                context:
+                    wrapped: '@SyliusAdmin/security/login/page/content/form.html.twig'

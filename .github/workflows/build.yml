@@ -21,9 +21,9 @@ jobs:
         strategy:
             fail-fast: false
             matrix:
-                php: ["8.1", "8.2", "8.3"]
-                sylius: [ ~1.12.0, ~1.13.0 ]
-                symfony: ["^6.4"]
+                php: ["8.3"]
+                sylius: [ ~2.0 ]
+                symfony: ["^6.4", "^7.4"]
                 node: ["20.x"]
                 mysql: ["8.0"]
 
@@ -67,7 +67,12 @@ jobs:
 
             -
                 name: Install certificates
-                run: symfony server:ca:install
+                run: |
+                    sudo apt-get update
+                    sudo apt-get install -y libnss3-tools
+                    mkdir -p "$HOME/.pki/nssdb"
+                    certutil -d "sql:$HOME/.pki/nssdb" -N --empty-password
+                    symfony server:ca:install
 
             -
                 name: Run Chrome Headless
@@ -138,7 +143,7 @@ jobs:
 
             -
                 name: Run PHPStan
-                run: vendor/bin/phpstan analyse -c phpstan.neon -l max src/
+                run: vendor/bin/phpstan analyse
 
             -
                 name: Run PHPSpec
