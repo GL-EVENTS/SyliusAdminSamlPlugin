@@ -51,6 +51,9 @@ class SamlConfigProvider
                 'singleLogoutService' => ['url' => $this->idpSlourl],
                 'x509cert' => $this->idpCert,
             ],
+            'security' => [
+                'requestedAuthnContext' => 'false',
+            ],
             'sp' => [
                 'entityId' => $schemeAndHost,
                 'assertionConsumerService' => [
