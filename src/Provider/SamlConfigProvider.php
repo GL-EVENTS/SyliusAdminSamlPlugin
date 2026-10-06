@@ -52,7 +52,7 @@ class SamlConfigProvider
                 'x509cert' => $this->idpCert,
             ],
             'security' => [
-                'requestedAuthnContext' => 'false',
+                'requestedAuthnContext' => false,
             ],
             'sp' => [
                 'entityId' => $schemeAndHost,
