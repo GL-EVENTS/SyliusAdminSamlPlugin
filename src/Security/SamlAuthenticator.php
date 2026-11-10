@@ -7,8 +7,6 @@ namespace GlEvents\SyliusAdminSamlPlugin\Security;
 use GlEvents\SyliusAdminSamlPlugin\Provider\SamlConfigProvider;
 use GlEvents\SyliusAdminSamlPlugin\Provider\SamlUserProvider;
 use OneLogin\Saml2\Auth;
-use OneLogin\Saml2\Error;
-use OneLogin\Saml2\ValidationError;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -45,7 +43,7 @@ class SamlAuthenticator extends AbstractAuthenticator
         try {
             $auth = new Auth($this->samlConfigProvider->getConfig());
             $auth->processResponse();
-        } catch (Error | ValidationError $e) {
+        } catch (\Throwable $e) {
             $this->logger->critical('Unable to process SAML response', [
                 'login_error' => 'saml_response_invalid',
                 'saml_failure' => [
@@ -87,7 +85,7 @@ class SamlAuthenticator extends AbstractAuthenticator
 
         $email = $attributes[$this->samlIdentifierKey][0];
 
-        $user = $this->userProvider->loadUserByEmail($email);
+        $user = $this->userProvider->loadEnabledUserByEmail($email);
 
         if (null === $user) {
             $this->logger->info('Trying to login with SAML but user not found', [
