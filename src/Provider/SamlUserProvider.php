@@ -22,18 +22,18 @@ class SamlUserProvider implements UserProviderInterface
     ) {
     }
 
-    public function loadUserByEmail(string $identifier): ?UserInterface
+    public function loadEnabledUserByEmail(string $identifier): ?UserInterface
     {
         /** @var UserInterface|null $user */
-        $user = $this->adminUserRepository->findOneBy(['email' => $identifier]);
+        $user = $this->adminUserRepository->findOneBy(['email' => $identifier, 'enabled' => true]);
 
         return $user;
     }
 
     public function loadUserByIdentifier(string $identifier): UserInterface
     {
-        if ($this->loadUserByEmail($identifier) !== null) {
-            return $this->loadUserByEmail($identifier);
+        if ($this->loadEnabledUserByEmail($identifier) !== null) {
+            return $this->loadEnabledUserByEmail($identifier);
         }
 
         throw new UserNotFoundException(sprintf(
