@@ -40,7 +40,22 @@ final class SamlConfigProviderTest extends TestCase
         self::assertSame('http://localhost/admin/login/saml/acs', $config['sp']['assertionConsumerService']['url']);
     }
 
-    private function createProvider(string $uri): SamlConfigProvider
+    public function testItUsesTheConfiguredEntityIdWhileKeepingTheAcsOnTheCurrentHost(): void
+    {
+        $config = $this->createProvider('https://pbs.preprod.example.com/admin/login/saml', 'https://preprod.example.com')->getConfig();
+
+        self::assertSame('https://preprod.example.com', $config['sp']['entityId']);
+        self::assertSame(
+            'https://pbs.preprod.example.com/admin/login/saml/acs',
+            $config['sp']['assertionConsumerService']['url'],
+        );
+        self::assertSame(
+            'https://pbs.preprod.example.com/admin/login/saml/logout',
+            $config['sp']['singleLogoutService']['url'],
+        );
+    }
+
+    private function createProvider(string $uri, string $spEntityId = ''): SamlConfigProvider
     {
         $requestStack = new RequestStack();
         $requestStack->push(Request::create($uri));
@@ -54,6 +69,7 @@ final class SamlConfigProviderTest extends TestCase
             'IDP-CERTIFICATE',
             'admin',
             false,
+            $spEntityId,
         );
     }
 }

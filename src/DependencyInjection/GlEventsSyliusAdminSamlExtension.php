@@ -19,7 +19,7 @@ final class GlEventsSyliusAdminSamlExtension extends AbstractResourceExtension i
     {
         /** @var array{
          *     idp: array{entity_id: ?string, sso_url: ?string, slo_url: ?string, certificate: ?string},
-         *     sp: array{private_key: ?string},
+         *     sp: array{entity_id: ?string, private_key: ?string},
          *     identifier_key: ?string,
          *     proxy_vars: bool,
          *     admin_login: bool,
@@ -35,6 +35,7 @@ final class GlEventsSyliusAdminSamlExtension extends AbstractResourceExtension i
         $container->setParameter('gl_events_sylius_admin_saml.idp.sso_url', (string) $config['idp']['sso_url']);
         $container->setParameter('gl_events_sylius_admin_saml.idp.slo_url', (string) $config['idp']['slo_url']);
         $container->setParameter('gl_events_sylius_admin_saml.idp.certificate', (string) $config['idp']['certificate']);
+        $container->setParameter('gl_events_sylius_admin_saml.sp.entity_id', (string) $config['sp']['entity_id']);
         $container->setParameter('gl_events_sylius_admin_saml.sp.private_key', (string) $config['sp']['private_key']);
         $container->setParameter('gl_events_sylius_admin_saml.identifier_key', (string) $config['identifier_key']);
         $container->setParameter('gl_events_sylius_admin_saml.proxy_vars', $config['proxy_vars']);

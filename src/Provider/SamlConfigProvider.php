@@ -28,6 +28,8 @@ class SamlConfigProvider
         private readonly string $syliusAdminPathName,
         #[Autowire(param: 'gl_events_sylius_admin_saml.proxy_vars')]
         private readonly bool $proxyVars = false,
+        #[Autowire(param: 'gl_events_sylius_admin_saml.sp.entity_id')]
+        private readonly string $spEntityId = '',
     ) {
     }
 
@@ -40,7 +42,7 @@ class SamlConfigProvider
     {
         Utils::setProxyVars($this->proxyVars);
 
-        [$scheme, $host] = $this->getSPEntityId();
+        [$scheme, $host] = $this->getSchemeAndHost();
 
         $schemeAndHost = sprintf('%s://%s', $scheme, $host);
 
@@ -55,7 +57,7 @@ class SamlConfigProvider
                 'requestedAuthnContext' => false,
             ],
             'sp' => [
-                'entityId' => $schemeAndHost,
+                'entityId' => '' !== $this->spEntityId ? $this->spEntityId : $schemeAndHost,
                 'assertionConsumerService' => [
                     'url' => $schemeAndHost . '/' . $this->syliusAdminPathName . '/login/saml/acs',
                 ],
@@ -70,7 +72,7 @@ class SamlConfigProvider
     /**
      * @return array<int, string>
      */
-    private function getSPEntityId(): array
+    private function getSchemeAndHost(): array
     {
         /** @var Request $request */
         $request = $this->requestStack->getCurrentRequest();
