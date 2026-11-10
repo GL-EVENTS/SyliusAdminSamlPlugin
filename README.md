@@ -47,6 +47,7 @@ gl_events_sylius_admin_saml:
         slo_url: 'https://idp.example.com/slo'   # optional
         certificate: 'MIID...'
     sp:
+        entity_id: 'https://example.com'   # optional, see "Serving several hosts" below
         private_key: |
             -----BEGIN PRIVATE KEY-----
             ...
@@ -58,6 +59,8 @@ gl_events_sylius_admin_saml:
 ```
 
    Every setting is optional and defaults to an empty string (`proxy_vars` to `false`, `admin_login`/`sso_login` to `true`); a missing SAML setting simply makes the SSO login fail at runtime (flash + redirect back to the login page), it never breaks the app boot. Any value may still reference an env var if you prefer, e.g. `certificate: '%env(SAML_IDP_CERTIFICATE)%'`.
+
+   **Serving several hosts (e.g. one subdomain per channel).** The SP `entityId` (the `Issuer` the IdP uses to find the application) and the ACS URL (where the IdP posts the response back) are two different things. By default the plugin derives both from the current request's scheme + host, so every host presents itself to the IdP as a distinct application, each needing its own identifier. Set `sp.entity_id` to a fixed URI (it does not have to resolve) to make every host present itself as the **same** application: only the ACS/SLO URLs keep following the current host. On the IdP side (e.g. Microsoft Entra ID), declare that single value as the application identifier and add each host's `https://<host>/<admin>/login/saml/acs` as a reply URL. The SP metadata (`/<admin>/login/saml/metadata`) only lists the ACS of the host serving it, so add the other hosts' reply URLs by hand after importing it.
 
 5. Wrap the traditional admin login form so it can be toggled with `admin_login`.
 
