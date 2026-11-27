@@ -24,10 +24,10 @@ class SamlConfigProvider
         private readonly string $idpSlourl,
         #[Autowire(env: 'SAML_IDP_CERTIFICATE')]
         private readonly string $idpCert,
-        #[Autowire(env: 'bool:SAML_PROXY_VARS')]
-        private readonly bool $proxyVars = false,
         #[Autowire(param: 'sylius_admin.path_name')]
         private readonly string $syliusAdminPathName,
+        #[Autowire(env: 'bool:SAML_PROXY_VARS')]
+        private readonly bool $proxyVars = false,
     )
     {
     }
@@ -53,7 +53,7 @@ class SamlConfigProvider
                 'x509cert' => $this->idpCert,
             ],
             'security' => [
-                'requestedAuthnContext' => 'false',
+                'requestedAuthnContext' => false,
             ],
             'sp' => [
                 'entityId' => $schemeAndHost,
